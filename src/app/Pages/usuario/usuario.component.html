@@ -1,0 +1,181 @@
+<br>
+<h4 class="text-center"><b>Usuarios</b></h4>
+<hr>
+<div class="col-8 pt-2 ml-5 mr-5">
+    <form autocomplete="off" (ngSubmit)="registrarUsuario(forma)" #forma="ngForm" class="col bg-light shadow-sm p-3 mb-5 rounded border">
+        <h5 class="text-center">Agregar Usuario</h5>
+        <div class="form-group row">
+            <label for="nombre" class="col-2 col-form-label">Nombre:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Nombre" name="nombre" [(ngModel)]="usuario.nombre" #nombre="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="apellido" class="col-2 col-form-label">Apellido:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Apellido" name="apellido" [(ngModel)]="usuario.apellido" #apellido="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="email" class="col-2 col-form-label">Email:</label>
+            <div class="col">
+                <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="usuario.email" #email="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="password" class="col-2 col-form-label">Password:</label>
+            <div class="col">
+                <input type="string" class="form-control col-6 mb-1" placeholder="Password" name="password" [(ngModel)]="usuario.password" [value]="usuario.password | password:active" #password="ngModel">
+                <button class="btn btn-outline-danger col-2" (click)="active = !active" type="button"> 
+                    <p *ngIf="active" class="mb-0">Show</p>
+                    <p *ngIf="!active" class="mb-0">Hide</p>
+                    <!--Mostrar/Ocultar-->
+                </button>
+            </div>
+        </div>
+        <br>
+        <div class="form-group row">
+            <div class="col input-group">
+                <button type="submit" class="btn btn-outline-info btn-block">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<br>
+<br>
+<div class="container col-10">
+    <h5 class="text-center">Lista de Usuarios</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Imagen</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Apellido</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Google</th>
+                    <th class="text-center">Role</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usr of users; let i=index">
+                    <th scope="row">{{i+1}}</th>
+                    <th class="text-center"><img src="../../../assets/user.webp" alt="" class="imgDefaUser"></th>
+                    <td>{{usr.nombre}}</td>
+                    <td>{{usr.apellido}}</td>
+                    <td>{{usr.email}}</td>
+                    <td>{{usr.estado}}</td>
+                    <td>{{usr.google}}</td>
+                    <td>{{usr.role}}</td>
+                    <td class="text-center">
+                        <button class="btn btn-outline-danger m-1" (click)="getId(usr._id)" data-toggle="modal" data-target="#btnDanger" type="button"><i class="fas fa-trash"></i></button>
+
+                        <button class="btn btn-outline-warning m-1" (click)="getId(usr._id)" data-toggle="modal" data-target="#btnWarning" type="button"><i class="fas fa-user-edit"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br><br>
+
+<!--Modal para Eliminar-->
+
+<div class="modal" tabindex="-1" role="dialog" id="btnDanger">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Eliminar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Seguro que quieres eliminar este usuario?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" (click)="eliminarUsuario()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal para Editar-->
+<div class="modal fade" id="btnWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modificar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <form class="col bg-light shadow-sm p-3 mb-5 rounded border" autocomplete="off">
+                    <!-- <div class="form-group row">
+                        <label for="firstName" class="col-2 col-form-label">ID:</label>
+                        <div class="col">
+                            <input type="text" class="form-control" min="1" placeholder="ID" disabled>
+                        </div>
+                    </div> -->
+
+                    <div class="form-group row">
+                        <label for="nombre" class="col-2 col-form-label">Nombre:</label>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="usuario.nombre" #nombre="ngModel" name="nombre" >
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="apellido" class="col-2 col-form-label">Apellido:</label>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Apellido" [(ngModel)]="usuario.apellido" #apellido="ngModel" name="apellido">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="email" class="col-2 col-form-label">Email:</label>
+                        <div class="col">
+                            <input type="email" class="form-control" placeholder="Email" [(ngModel)]="usuario.email" #email="ngModel" name="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="estado" class="col-2 col-form-label">Estado:</label>
+                        <div class="col">
+                            <input type="boolean" class="form-control" placeholder="Estado" [(ngModel)]="usuario.estado" #estado="ngModel" name="estado">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="google" class="col-2 col-form-label">Google:</label>
+                        <div class="col">
+                            <input type="boolean" class="form-control" placeholder="Google" [(ngModel)]="usuario.google" #google="ngModel" name="google">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="role" class="col-2 col-form-label">Role:</label>
+                        <div class="col">
+                            <input type="string" class="form-control" placeholder="Role" [(ngModel)]="usuario.role" #role="ngModel" name="role">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-outline-warning" (click)="actualizarUsuario()">Modificar</button>
+            </div>
+        </div>
+    </div>
+</div>

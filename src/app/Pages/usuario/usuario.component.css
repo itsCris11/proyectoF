@@ -1,0 +1,21 @@
+.left {
+    padding-left: 10px;
+    padding-top: 10px;
+    margin-left: 57px;
+    float: left;
+    width: 45%;
+    height: auto;
+}
+
+.right {
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-left: 10px;
+    float: left;
+    width: 45%;
+    height: auto;
+}
+
+.imgDefaUser {
+    width: 50px;
+}

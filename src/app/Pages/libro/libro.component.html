@@ -1,0 +1,196 @@
+<br>
+<h4 class="text-center"><b>Libros</b></h4>
+<hr>
+
+<div class="container-fluid col-4 float-right mr-5">
+    <h5 class="text-center"> Usuarios</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usr of users; let i=index">
+                    <td>{{usr._id}}</td>
+                    <td>{{usr.nombre}} {{usr.apellido}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-6 pt-2 ml-5 mr-5">
+    <form autocomplete="off" (ngSubmit)="registrarLibro(forma)" #forma="ngForm" class="col bg-light shadow-sm p-3 mb-5 rounded border">
+        <h5 class="text-center">Agregar Libro</h5>
+        <div class="form-group row">
+            <label for="nombre" class="col-2 col-form-label">Titulo:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Titulo" name="nombre" [(ngModel)]="libro.nombre" #nombre="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="autor" class="col-2 col-form-label">Autor:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Autor" name="autor" [(ngModel)]="libro.autor" #autor="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="precioU" class="col-2 col-form-label">Costo:</label>
+            <div class="col">
+                <input type="number" class="form-control" placeholder="Costo" name="precioU" [(ngModel)]="libro.precioU" #precioU="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="categoria" class="col-2 col-form-label">Categoria:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Categoria" name="categoria" [(ngModel)]="libro.categoria" #categoria="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="usuario" class="col-2 col-form-label">Usuario:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder=" ID Usuario Registro" name="usuario" [(ngModel)]="libro.usuario" #usuario="ngModel">
+                <!-- class="form-control" name="usuario" [(ngModel)]="libro.usuario" #usuario="ngModel">
+                    <option *ngFor="let item of users" [ngValue]="item">{{item._id.nombre}}</option>
+                  </select>-->
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col input-group">
+                <button type="submit" class="btn btn-outline-info btn-block">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+<br>
+<div class="container col-10">
+    <h5 class="text-center">Lista de Libros</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Imagen</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Autor</th>
+                    <th class="text-center">Costo</th>
+                    <th class="text-center">Categoria</th>
+                    <th class="text-center">Disponible</th>
+                    <th class="text-center">Usuario Registro</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let lib of libros; let i=index">
+                    <th scope="row">{{i+1}}</th>
+                    <th class="text-center"><img src="../../../assets/book.png" alt="" class="imgDefaBook"></th>
+                    <td>{{lib.nombre}}</td>
+                    <td>{{lib.autor}}</td>
+                    <td>{{lib.precioU}}</td>
+                    <td>{{lib.categoria}}</td>
+                    <td>{{lib.disponible}}</td>
+                    <td>{{lib.usuario.nombre}}</td>
+                    <td>
+                         <button class="btn btn-outline-danger m-1"  data-toggle="modal" data-target="#btnDanger" (click)="getId(lib._id)" type="button"><i class="fas fa-trash"></i></button>
+                        <button class="btn btn-outline-warning m-1"  data-toggle="modal" data-target="#btnWarning"  (click)="getId(lib._id)" type="button"><i class="fas fa-user-edit"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br><br>
+
+<!--Modal para Eliminar-->
+
+<div class="modal" tabindex="-1" role="dialog" id="btnDanger">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Eliminar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Seguro que quieres eliminar este usuario?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" (click)="eliminarLibro()" >Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal para Editar-->
+<div class="modal fade" id="btnWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modificar Libro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                                <form autocomplete="off" class="col bg-light shadow-sm p-3 mb-5 rounded border">
+        <div class="form-group row">
+            <label for="nombre" class="col-2 col-form-label">Titulo:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Titulo" name="nombre" [(ngModel)]="libro.nombre" #nombre="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="autor" class="col-2 col-form-label">Autor:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Autor" name="autor" [(ngModel)]="libro.autor" #autor="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="precioU" class="col-2 col-form-label">Costo:</label>
+            <div class="col">
+                <input type="number" class="form-control" placeholder="Costo" name="precioU" [(ngModel)]="libro.precioU" #precioU="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="categoria" class="col-2 col-form-label">Categoria:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Categoria" name="categoria" [(ngModel)]="libro.categoria" #categoria="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="usuario" class="col-2 col-form-label">Usuario:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Usuario" name="usuario" [(ngModel)]="libro.usuario" #usuario="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="disponible" class="col-2 col-form-label">Disponible:</label>
+            <div class="col">
+                <input type="boolean" class="form-control" placeholder="Disponible" name="disponible" [(ngModel)]="libro.disponible" #disponible="ngModel">
+            </div>
+        </div>
+    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-outline-warning" (click)="actualizarLibro()">Modificar</button>
+            </div>
+        </div>
+    </div>
+</div>

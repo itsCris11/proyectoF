@@ -1,0 +1,214 @@
+<br>
+<h4 class="text-center"><b>Prestamos</b></h4>
+<hr>
+
+<div class="container-fluid col-5 float-right mr-4 mb-3">
+    <h5 class="text-center"> Usuarios</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">ID Usuario</th>
+                    <th class="text-center">Nombre Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usr of users">
+                    <td>{{usr._id}}</td>
+                    <td>{{usr.nombre}} {{usr.apellido}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h5 class="text-center">Libros</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">ID Libro</th>
+                    <th class="text-center">Nombre Libro</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let lib of libros">
+                    <td>{{lib._id}}</td>
+                    <td>{{lib.nombre}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="col-6 pt-2 ml-5 mr-5">
+    <form autocomplete="off" (ngSubmit)="registrarPrestamo(forma)" #forma="ngForm" class="col bg-light shadow-sm p-3 mb-5 rounded border">
+        <h5 class="text-center">Agregar Prestamo</h5>
+        <div class="form-group row">
+            <label for="nombre" class="col-2 col-form-label">Nombre:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Nombre" name="nombre" [(ngModel)]="prestamo.nombre" #nombre="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="apellido" class="col-2 col-form-label">Apellido:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Apellido" name="apellido" [(ngModel)]="prestamo.apellido" #nombre="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="email" class="col-2 col-form-label">Email:</label>
+            <div class="col">
+                <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="prestamo.email" #nombre="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="libro" class="col-2 col-form-label">Libro:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="ID Libro" name="libro" [(ngModel)]="prestamo.libro" #nombre="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="usuarioRegistro" class="col-2 col-form-label">Usuario Registro:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="ID Usuario Registro" name="usuarioRegistro" [(ngModel)]="prestamo.usuarioRegistro" #nombre="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col input-group">
+                <button type="submit" class="btn btn-outline-info btn-block">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container col-10 mt-2">
+    <h5 class="text-center">Lista de Prestamos</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Imagen</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Apellido</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Libro</th>
+                    <th class="text-center">Usuario Registro</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pre of prestamos;let i=index">
+                    <th scope="row">{{i+1}}</th>
+                    <th class="text-center"><img src="../../../assets/prestamo.jpg" alt="" class="imgDefaPre"></th>
+                    <td>{{pre.nombre}}</td>
+                    <td>{{pre.apellido}}</td>
+                    <td>{{pre.email}}</td>
+                    <td>{{pre.estado}}</td>
+                    <td>{{pre.libro}}</td>
+                    <td>{{pre.usuarioRegistro}}</td>
+                    <td>
+                        <button class="btn btn-outline-danger m-1"  data-toggle="modal" data-target="#btnDanger" (click)="getId(pre._id)" type="button"><i class="fas fa-trash"></i></button>
+                        <button class="btn btn-outline-warning m-1"  data-toggle="modal" data-target="#btnWarning" (click)="getId(pre._id)" type="button"><i class="fas fa-user-edit"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br><br>
+
+<!--Modal para Eliminar-->
+
+<div class="modal" tabindex="-1" role="dialog" id="btnDanger">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Eliminar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Seguro que quieres eliminar este usuario?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" (click)="eliminarPrestamo()" >Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal para Editar-->
+<div class="modal fade" id="btnWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modificar Prestamo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                    <form autocomplete="off" class="col bg-light shadow-sm p-3 mb-5 rounded border">
+        <div class="form-group row">
+            <label for="nombre" class="col-2 col-form-label">Nombre:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Nombre" name="nombre" [(ngModel)]="prestamo.nombre" #nombre="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="apellido" class="col-2 col-form-label">Apellido:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Apellido" name="apellido"  [(ngModel)]="prestamo.apellido" #apellido="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="email" class="col-2 col-form-label">Email:</label>
+            <div class="col">
+                <input type="email" class="form-control" placeholder="Email" name="email"  [(ngModel)]="prestamo.email" #email="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="estado" class="col-2 col-form-label">Estado:</label>
+            <div class="col">
+                <input type="boolean" class="form-control" placeholder="Estado" name="estado"  [(ngModel)]="prestamo.estado" #estado="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="libro" class="col-2 col-form-label">Libro:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Libro" name="libro"  [(ngModel)]="prestamo.libro" #libro="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="usuarioRegistro" class="col-2 col-form-label">Usuario Registro:</label>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Usuario Registro" name="usuarioRegistro"  [(ngModel)]="prestamo.usuarioRegistro" #usuarioRegistro="ngModel">
+            </div>
+        </div>
+    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-outline-warning" (click)="actualizarPrestamo()">Modificar</button>
+            </div>
+        </div>
+    </div>
+</div>

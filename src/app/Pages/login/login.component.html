@@ -1,0 +1,31 @@
+<div class="body">
+
+    <div class="registration-form">
+        <form autocomplete="off">
+            <div class="form-icon">
+                <span><i class="fa fa-user"></i></span>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control item" id="email" placeholder="Email" name="email" [(ngModel)]="usuario.email" #email="ngModel">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control item" id="password" placeholder="Password" name="Password" [(ngModel)]="usuario.password" #password="ngModel">
+            </div>
+                <div class="form-group">
+                <button type="button" class="btn btn-block create-account" (click)="loginUsuario()">Login</button>
+                            </div>
+
+        </form>
+
+        <div class="social-media">
+            <h5>Social media</h5>
+            <div class="social-icons">
+                <a  href="https://www.facebook.com/"><i class="fa fa-facebook-f" title="Facebook"></i></a>
+                <a href="https://www.google.com.mx/"><i class="fa fa-google" title="Google"></i></a>
+                <a href="https://github.com/"><i class="fa-github" title="Twitter"></i></a>
+            </div>
+        </div>
+    </div>
+
+</div>
